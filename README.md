@@ -44,29 +44,53 @@ The .style files is very simple ,all the paramters are configed in thease files.
 ```
 th ezstyle ./dreamer.style
 ```
+<p>
+<img src="/images/winter.png" height="256px" style="max-width:100%;">
+<img src="/images/_results/dreamer.png" height="256px" style="max-width:100%;">
+</p>
+
+
 
 ### 2.2 gram matrix mode 
 
 ```
 th ezstyle ./gram.style
 ```
+<p>
+<img src="/images/trump.png" height="256px" style="max-width:100%;">
+<img src="/images/picasso.png" height="256px" style="max-width:100%;">
+<img src="/images/_results/gram.png" height="256px" style="max-width:100%;">
+</p>
+
 
 ### 2.3 MRF mode
 
 ```
 th ezstyle ./mrf.style
 ```
+<p>
+<img src="/images/ford.png" height="256px" style="max-width:100%;">
+<img src="/images/lohan.png" height="256px" style="max-width:100%;">
+<img src="/images/_results/mrf.png" height="256px" style="max-width:100%;">
+</p>
+
 
 ### 2.4 guided mode
 
-WIP
+[WIP]
 
 ### 3. Resouces
 
-All of code is coming from following projects, I have make them more simpler and clean. 
+All of code is coming from following projects, I have make them more simpler and stupid :).
 
 
+https://github.com/chuanli11/CNNMRF
 
+https://github.com/alexjc/neural-doodle
+
+https://github.com/awentzonline/image-analogies
+
+https://github.com/jcjohnson/neural-style
 
 
 
