@@ -1,0 +1,29 @@
+local net = {
+    image_list = {'./images/winter.png', './output.png'},
+    input =  1,
+    output = 2,
+    
+    convergence = false,
+    maxIterate = 10,
+    step = 0.0001,
+
+    cnn = {
+        proto = './cnn/vgg19/VGG_ILSVRC_19_layers_deploy.prototxt',
+        caffemodel = './cnn/vgg19/VGG_ILSVRC_19_layers.caffemodel' 
+    },
+
+    net = {
+        {
+            layer = 'relu2_1',
+            type = 'amp',
+            ratio = 1.0,
+        },
+        {
+            layer = 'relu4_4',
+            type = 'amp',
+            ratio = 2.0,
+        }
+    }
+}
+
+return net

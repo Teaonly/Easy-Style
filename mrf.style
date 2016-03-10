@@ -1,0 +1,35 @@
+local net = {
+    image_list = {'./images/ford.png', './images/lohan.png', './output.png'},
+    input =  1,
+    output = 3,
+    
+    convergence = true,
+    maxIterate = 1000,
+
+    cnn = {
+        proto = './cnn/vgg19/VGG_ILSVRC_19_layers_deploy.prototxt',
+        caffemodel = './cnn/vgg19/VGG_ILSVRC_19_layers.caffemodel' 
+    },
+
+    net = {
+        {
+            layer = 'input',
+            type = 'tvloss',
+            weight = 0.001,
+        },
+        {
+            layer = 'relu4_1',
+            type = 'mrf',
+            weight = 10.0,
+            target = 2,
+        },
+        {
+            layer = 'relu4_2',
+            type = 'content',
+            weight = 1.0,
+            target = 1,
+        }
+    }
+}
+
+return net
