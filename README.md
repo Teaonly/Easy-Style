@@ -39,7 +39,7 @@ source ./download_models.sh
 The .style files descript the arch of network used in style transformer, they are based on Lua language. 
 The .style files is very simple ,all the paramters are configed in thease files.
 
-### 2.1 dreamer mode mode
+### 2.1 dreamer mode
 
 ```
 th ezstyle ./dreamer.style
