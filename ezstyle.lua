@@ -106,7 +106,7 @@ end
 function loadInput(conf) 
     local img = nil
     if ( conf.image_list[conf.input] == nil ) then
-        img = torch.rand(3, 256, 256) * 0.01
+        img = torch.rand(3, conf.height, conf.width)
     else
         img = image.load(conf.image_list[conf.input], 3)
     end
@@ -208,8 +208,6 @@ function buildLayer(net, conf, nindex, cnn)
         local masks = torch.load ( conf.image_list[ conf.net[nindex].mask], 'ascii')
 
         layer = nn.MaskedGramLoss(conf.net[nindex].weight, style, masks)
-    else
-        print(">>>>>>>>>>>>>>>")
     end
     
     return layer

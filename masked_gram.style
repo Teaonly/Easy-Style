@@ -3,8 +3,11 @@ local net = {
     input =  -1,
     output = 3,
 
+    width = 512,
+    height = 320,
+
     convergence = true,
-    maxIterate = 500,
+    maxIterate = 1500,
 
     cnn = {
         proto = './cnn/vgg19/VGG_ILSVRC_19_layers_deploy.prototxt',

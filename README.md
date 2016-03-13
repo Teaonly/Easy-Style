@@ -75,14 +75,26 @@ th ezstyle ./mrf.style
 </p>
 
 
-### 2.4 guided mode
+### 2.4 guided mode 1 ( masked gram style transform )
+
+```
+th ezstyle ./masked_gram.style
+```
+<p>
+<img src="/images/renoir.png" height="256px" style="max-width:100%;">
+<img src="/images/renoir_target_mask.png" height="256px" style="max-width:100%;">
+<img src="/images/_results/masked_gram.png" height="256px" style="max-width:100%;">
+</p>
+
+
+### 2.5 guided mode 2 ( masked mrf )
 
 [WIP]
 
-### 3. Resouces
+
+### 3. Resources
 
 All of code is coming from following projects, I have make them more simpler and stupid :).
-
 
 https://github.com/chuanli11/CNNMRF
 
@@ -90,7 +102,8 @@ https://github.com/alexjc/neural-doodle
 
 https://github.com/awentzonline/image-analogies
 
-https://github.com/jcjohnson/neural-style
+https://github.com/jcjohnson/neural-style 
 
+https://github.com/DmitryUlyanov/fast-neural-doodle
 
 

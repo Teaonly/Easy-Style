@@ -47,7 +47,7 @@ function MaskedGramLoss:__init(strength, style, masks)
 
     local mask_net = nn.Sequential()
     local cmul = nn.CMul(style:size())
-    cmul.weight:cmul( target_mask)
+    cmul.weight:copy( target_mask)
 
     mask_net:add(cmul)
     mask_net:add(GramMatrix())
@@ -81,8 +81,8 @@ function MaskedGramLoss:updateGradInput(input, gradOutput)
   local img_size = tsize[2] * tsize[3]
  
   local dG = {}
-  for i = 1, #self.allGramTarget[i] do
-    dG[i] = self.crit:backward(self.maskedGram[i], self.allGramTarget[i])
+  for i = 1, #self.allGramTarget do
+    dG[i] = self.crit:backward(self.maskedGram[i], self.allGramTarget[i]):clone()
     dG[i]:mul(img_size)
   end
 
@@ -91,7 +91,4 @@ function MaskedGramLoss:updateGradInput(input, gradOutput)
   self.gradInput:add(gradOutput)
   return self.gradInput
 end
-
-
-
 
