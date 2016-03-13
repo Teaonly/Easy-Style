@@ -1,0 +1,58 @@
+local net = {
+    image_list = {'./images/renoir.png', './images/data/renoir_gram_mask.t7', './output.png'},
+    input =  -1,
+    output = 3,
+
+    convergence = true,
+    maxIterate = 500,
+
+    cnn = {
+        proto = './cnn/vgg19/VGG_ILSVRC_19_layers_deploy.prototxt',
+        caffemodel = './cnn/vgg19/VGG_ILSVRC_19_layers.caffemodel' 
+    },
+
+    net = {
+        {
+            layer = 'input',
+            type = 'tvloss',
+            weight = 0.001,
+        },
+        {
+            layer = 'relu1_1',
+            type = 'mask_gram',
+            weight = 1,
+            style = 1,
+            mask = 2
+        },
+        {
+            layer = 'relu2_1',
+            type = 'mask_gram',
+            weight = 1,
+            style = 1,
+            mask = 2
+        },
+        {
+            layer = 'relu3_1',
+            type = 'mask_gram',
+            weight = 1,
+            style = 1,
+            mask = 2
+        },
+        {
+            layer = 'relu4_1',
+            type = 'mask_gram',
+            weight = 1,
+            style = 1,
+            mask = 2
+        },
+        {
+            layer = 'relu5_1',
+            type = 'mask_gram',
+            weight = 1,
+            style = 1,
+            mask = 2
+        }
+    }
+}
+
+return net

@@ -24,8 +24,8 @@ function main()
 
     -- only support 4 channels
     local masks = {}  
-    masks.style = torch.zeros(4, height, width)
-    masks.target = torch.zeros(4, height, width)
+    masks.style = {}
+    masks.target = {}
 
     -- white only
     local whiteMask = torch.zeros(height, width):byte()
@@ -54,7 +54,7 @@ function main()
         masks.style[i+1] = colorMask:clone()
     end
 
-    torch.save(arg[3], masks)
+    torch.save(arg[3], masks, 'ascii')
 end
 
 main()

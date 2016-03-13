@@ -10,6 +10,7 @@ require('./lib/tvloss')
 require('./lib/contentloss')
 require('./lib/gramloss')
 require('./lib/mrfloss')
+require('./lib/masked_gramloss')
 require('./lib/amplayer')
 require('./lib/randlayer')
 
@@ -105,7 +106,7 @@ end
 function loadInput(conf) 
     local img = nil
     if ( conf.image_list[conf.input] == nil ) then
-        img = torch.rand(3, 256, 256) * 0.2
+        img = torch.rand(3, 256, 256) * 0.01
     else
         img = image.load(conf.image_list[conf.input], 3)
     end
@@ -198,6 +199,17 @@ function buildLayer(net, conf, nindex, cnn)
         local input = net:forward(inputCaffe)
 
         layer = nn.MRFLoss(conf.net[nindex].weight, input, target)
+    elseif ( conf.net[nindex].type == 'mask_gram') then
+        local styleImage = conf.image_list[ conf.net[nindex].style] 
+        styleImage = image.load(styleImage,3)
+        local styleCaffe = caffeImage.img2caffe(styleImage)
+        local style = net:forward(styleCaffe):clone() 
+
+        local masks = torch.load ( conf.image_list[ conf.net[nindex].mask], 'ascii')
+
+        layer = nn.MaskedGramLoss(conf.net[nindex].weight, style, masks)
+    else
+        print(">>>>>>>>>>>>>>>")
     end
     
     return layer
