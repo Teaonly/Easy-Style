@@ -116,7 +116,7 @@ function buildLossNet ()
         
         if ( name == gramLoss[ gram_index ] ) then
             local target = net:forward( styleCaffeImage )
-            local layer =  nn.GramLoss(0.0001, target, false)
+            local layer =  nn.GramLoss(0.01, target, false)
             net:add(layer)
             table.insert(modifier, layer)
 
@@ -144,16 +144,19 @@ function buildStyledNet()
     local model = nn.Sequential()
 
     model:add(cudnn.SpatialConvolution(3, 32, 3, 3, 1, 1, 1, 1))
+    model:add(nn.SpatialBatchNormalization(32))
     model:add(nn.LeakyReLU(0.1))
     model:add(cudnn.SpatialConvolution(32, 32, 3, 3, 1, 1, 1, 1))
+    model:add(nn.SpatialBatchNormalization(32))
     model:add(nn.LeakyReLU(0.1))
     model:add(cudnn.SpatialConvolution(32, 64, 3, 3, 1, 1, 1, 1))
-    model:add(nn.LeakyReLU(0.1))
-    model:add(cudnn.SpatialConvolution(64, 64, 3, 3, 1, 1, 1, 1))
+    model:add(nn.SpatialBatchNormalization(64))
     model:add(nn.LeakyReLU(0.1))
     model:add(cudnn.SpatialConvolution(64, 128, 3, 3, 1, 1, 1, 1))
+    model:add(nn.SpatialBatchNormalization(128))
     model:add(nn.LeakyReLU(0.1))
     model:add(cudnn.SpatialConvolution(128, 128, 3, 3, 1, 1, 1, 1))
+    model:add(nn.SpatialBatchNormalization(128))
     model:add(nn.LeakyReLU(0.1))
     model:add(cudnn.SpatialConvolution(128, 3, 3, 3, 1, 1, 1, 1))
     model:add(nn.Tanh())
@@ -217,10 +220,8 @@ function doTrain()
 
         print(">>>>>>>>> err = " .. err[1]);
         
-        if ( j % 1000 == 0) then
-            local model = g.styledNet:clone()
-            cleanupModel(model)
-            torch.save('./model/style_' .. err[1] .. '.t7',  model)
+        if ( j % 100 == 0) then
+            torch.save('./model/style_' .. err[1] .. '.t7',  g.styledNet)
         end
 
         collectgarbage();
@@ -239,14 +240,15 @@ function doForward()
     local img = image.loadPNG( arg[2] , 3)
 
     local img = caffeImage.img2caffe(img)
-    img = img:cuda()
+    local x = torch.Tensor(1, img:size(1), img:size(2), img:size(3))
+    x[1]:copy(img)
+    x = x:cuda()
 
-    local outImg = net:forward(img)
+    local outImg = net:forward(x)
     outImg = outImg:float()
-    outImg = caffeImage.caffe2img(outImg)
+    outImg = caffeImage.caffe2img(outImg[1])
 
     image.savePNG('./output.png', outImg)
-
 end
 
 
@@ -270,7 +272,7 @@ function main()
 
     g.styledNet = buildStyledNet()
     g.optimState = {
-        learningRate = 0.0001,
+        learningRate = 0.0005,
     }
 
     -- load data

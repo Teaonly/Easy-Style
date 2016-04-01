@@ -44,7 +44,7 @@ local net = {
         {
             layer = 'relu4_2',
             type = 'content',
-            weight = 10.0,
+            weight = 1000.0,
             target = 1,
         },
         {

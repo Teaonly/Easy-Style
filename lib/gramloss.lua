@@ -52,7 +52,7 @@ function GramLoss:updateGradInput(input, gradOutput)
 
   local tsize = input:size()
   local img_size = tsize[2] * tsize[3]
-  dG:mul(img_size)
+  dG:div(img_size)
   
   self.gradInput = self.gram:backward(input, dG)
   if self.normalize then
